@@ -2,8 +2,8 @@ import { useState } from "react";
 
 export const Formularios = () => {
   const [formulario, setFormulario] = useState({
-    email: "test@test.com",
-    password: "123456",
+    email: "",
+    password: "",
   });
 
   const onChange = (value: string, campo: string) => {
@@ -21,6 +21,7 @@ export const Formularios = () => {
         className="form-control"
         placeholder="Email"
         value={formulario.email}
+        onChange={({ target }) => onChange(target.value, "email")}
       />
 
       <input
@@ -28,7 +29,12 @@ export const Formularios = () => {
         className="form-control mb-2 mt-2"
         placeholder="Password"
         value={formulario.password}
+        onChange={({ target }) => onChange(target.value, "password")}
       />
+
+      <code>
+        <pre>{ JSON.stringify( formulario, null, 2 )}</pre>
+      </code>
     </>
   );
 };
