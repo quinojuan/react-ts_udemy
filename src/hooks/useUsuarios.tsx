@@ -4,7 +4,7 @@ import { reqResApi } from "../api/reqRes";
 
 export const useUsuarios = () => {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
-  const paginaRef = useRef(0);
+  const paginaRef = useRef(1);
 
   useEffect(() => {
     // llamado a la API
@@ -19,16 +19,29 @@ export const useUsuarios = () => {
     });
 
     if (res.data.data.length > 0) {
+      console.log({if: paginaRef.current})
       setUsuarios(res.data.data);
-      console.log(res.data.data);
-      paginaRef.current++;
     } else {
+      paginaRef.current--;
       alert("No hay mas registros");
     }
   };
+
+  const paginaSiguiente = () => {
+    paginaRef.current++;
+    cargarUsuarios();
+  };
+
+  const paginaAnterior = () => {
+    if (paginaRef.current > 1) {
+      paginaRef.current--;
+      cargarUsuarios();
+    }
+  };
+
   return {
     usuarios,
-    cargarUsuarios,
-    paginaRef
+    paginaAnterior,
+    paginaSiguiente,
   };
 };
